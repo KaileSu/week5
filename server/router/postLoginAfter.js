@@ -13,16 +13,17 @@ module.exports = function(req, res) {
         uArray = JSON.parse(data);
         console.log(userobj);
         
-        let i = uArray.findIndex(x=>x.id==userobj.id);
+        let i = uArray.findIndex(x=>x.username==userobj.username);
         if (i== -1) {
             uArray.push(userobj);
         }
+
+        res.send(uArray);
         
 
         let uArrayjson = JSON.stringify(uArray);
         fs.writeFile('server/data/extendedUsers.json', uArrayjson, 'utf-8', function(err) {
             if (err) throw err;
-            res.send(uArray);
         });
     });
 }

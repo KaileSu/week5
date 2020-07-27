@@ -15,10 +15,19 @@ module.exports = function(req, res) {
         if (i == -1) {
             res.send({ "ok": false });
         } else {
-            console.log(userArray[i]);
-            res.send({ "ok": true });
+            fs.readFile('./server/data/extendedUsers.json', 'utf8', function(err, data) {
+                // the above path is with respect to where we run server.js
+                if (err) throw err;
+                let extendedUserArray = JSON.parse(data);
+                
+                let i = extendedUserArray.findIndex(user =>
+                    ((user.username == u) ));
+                let userData = extendedUserArray[i];
+                userData["ok"] = true;
+                console.log(userData);
+                res.send(userData);
+            })
         }
-
     });
 
 }
